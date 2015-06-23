@@ -12,9 +12,11 @@ namespace Primes
         static void Main(string[] args)
         {
             Int64 topNumber;
-            int numberOfPrimes = 1;
-            List<int> myPrimes = new List<int>();
             bool isItPrime = false;
+
+            List<int> myPrimes = new List<int>();
+            myPrimes.Add(2);
+
             CustomStopwatch sw = new CustomStopwatch();
 
             try
@@ -27,8 +29,6 @@ namespace Primes
 
             sw.Start();
             Console.WriteLine("Primes from 2 to " + topNumber + ":");
-            myPrimes.Add(2);
-            
             
             for (int primeCheck = 3; primeCheck < topNumber + 1; primeCheck++)
             {
@@ -37,7 +37,6 @@ namespace Primes
                     isItPrime = checkThroughList(primeCheck, myPrimes);
                     if (isItPrime)
                     {
-                        numberOfPrimes++;
                         myPrimes.Add(primeCheck);
                         printNumbers(primeCheck);
                     }
@@ -45,12 +44,12 @@ namespace Primes
             }
 
             sw.Stop();
-            //Write out all the primes
-            //printList(myPrimes);
 
             Console.WriteLine("");
-            Console.WriteLine("There are " + numberOfPrimes + " primes from 2 to " + topNumber + ". It took " + sw.ElapsedMilliseconds + "ms to calculate.");
             Console.WriteLine("");
+            Console.WriteLine("There are " + myPrimes.Count + " primes from 2 to " + topNumber + ". It took " + sw.ElapsedMilliseconds + "ms to calculate.");
+            Console.WriteLine("");
+
             if (topNumber == myPrimes[myPrimes.Count - 1])
             {
                 Console.WriteLine(topNumber + " is a prime number");
@@ -61,13 +60,13 @@ namespace Primes
             }
         }
 
-        public static int squareRoundUp(Int64 i)
-        {
-            int result;
-            double j = Math.Sqrt(i);
-            result = (int)Math.Ceiling(j);
-            return result;
-        }
+        //public static int squareRoundUp(Int64 i)
+        //{
+        //    int result;
+        //    double j = Math.Sqrt(i);
+        //    result = (int)Math.Ceiling(j);
+        //    return result;
+        //}
 
         public static bool checkThroughList(int numberToCheck, List<int> listToCheckAgainst)
         {
@@ -152,21 +151,21 @@ namespace Primes
         public DateTime? EndAt { get; private set; }
 
 
-        public void Start()
+        public new void Start()
         {
             StartAt = DateTime.Now;
 
             base.Start();
         }
 
-        public void Stop()
+        public new void Stop()
         {
             EndAt = DateTime.Now;
 
             base.Stop();
         }
 
-        public void Reset()
+        public new void Reset()
         {
             StartAt = null;
             EndAt = null;
@@ -174,7 +173,7 @@ namespace Primes
             base.Reset();
         }
 
-        public void Restart()
+        public new void Restart()
         {
             StartAt = DateTime.Now;
             EndAt = null;
