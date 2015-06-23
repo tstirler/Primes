@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using System.Math;
 
 namespace Primes
 {
@@ -14,6 +14,9 @@ namespace Primes
             Int64 topNumber;
             int numberOfPrimes = 1;
             List<int> myPrimes = new List<int>();
+            bool isItPrime = false;
+            CustomStopwatch sw = new CustomStopwatch();
+
             try
             {
                 topNumber = Convert.ToInt32(args[0]);
@@ -21,10 +24,11 @@ namespace Primes
             {
                 topNumber = 101;
             }
-            bool isItPrime = false;
-            Console.WriteLine("Primes from 2 to " + topNumber + ":");
 
+            sw.Start();
+            Console.WriteLine("Primes from 2 to " + topNumber + ":");
             myPrimes.Add(2);
+            
             
             for (int primeCheck = 3; primeCheck < topNumber + 1; primeCheck++)
             {
@@ -40,11 +44,12 @@ namespace Primes
                 }
             }
 
+            sw.Stop();
             //Write out all the primes
             //printList(myPrimes);
 
             Console.WriteLine("");
-            Console.WriteLine("There are " + numberOfPrimes + " primes from 2 to " + topNumber);
+            Console.WriteLine("There are " + numberOfPrimes + " primes from 2 to " + topNumber + ". It took " + sw.ElapsedMilliseconds + "ms to calculate.");
             Console.WriteLine("");
             if (topNumber == myPrimes[myPrimes.Count - 1])
             {
@@ -138,5 +143,44 @@ namespace Primes
                 Console.Write("  ");
             }
         }
+    }
+
+    public class CustomStopwatch : Stopwatch
+    {
+
+        public DateTime? StartAt { get; private set; }
+        public DateTime? EndAt { get; private set; }
+
+
+        public void Start()
+        {
+            StartAt = DateTime.Now;
+
+            base.Start();
+        }
+
+        public void Stop()
+        {
+            EndAt = DateTime.Now;
+
+            base.Stop();
+        }
+
+        public void Reset()
+        {
+            StartAt = null;
+            EndAt = null;
+
+            base.Reset();
+        }
+
+        public void Restart()
+        {
+            StartAt = DateTime.Now;
+            EndAt = null;
+
+            base.Restart();
+        }
+
     }
 }
