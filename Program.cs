@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Primes
@@ -17,6 +19,7 @@ namespace Primes
             bool isItPrime = false;
             CustomStopwatch sw = new CustomStopwatch();
 
+
             try
             {
                 topNumber = Convert.ToInt32(args[0]);
@@ -28,8 +31,7 @@ namespace Primes
             sw.Start();
             Console.WriteLine("Primes from 2 to " + topNumber + ":");
             myPrimes.Add(2);
-            
-            
+                        
             for (int primeCheck = 3; primeCheck < topNumber + 1; primeCheck++)
             {
                 if (primeCheck % 2 != 0) //discard even numbers.
@@ -45,12 +47,19 @@ namespace Primes
             }
 
             sw.Stop();
-            //Write out all the primes
-            //printList(myPrimes);
 
             Console.WriteLine("");
-            Console.WriteLine("There are " + numberOfPrimes + " primes from 2 to " + topNumber + ". It took " + sw.ElapsedMilliseconds + "ms to calculate.");
             Console.WriteLine("");
+            if (sw.ElapsedMilliseconds > 5000)
+            {
+                Console.WriteLine("There are " + numberOfPrimes + " primes from 2 to " + topNumber + ". It took " + sw.Elapsed + "s to calculate.");
+            }
+            else
+            {
+                Console.WriteLine("There are " + numberOfPrimes + " primes from 2 to " + topNumber + ". It took " + sw.ElapsedMilliseconds + "ms to calculate.");
+            }
+            Console.WriteLine("");
+            
             if (topNumber == myPrimes[myPrimes.Count - 1])
             {
                 Console.WriteLine(topNumber + " is a prime number");
@@ -59,6 +68,9 @@ namespace Primes
             {
                 Console.WriteLine(topNumber + " is not a prime number");
             }
+            Console.WriteLine("");
+            Console.WriteLine("Saving numbers to file.");
+            saveNumbers(myPrimes);
         }
 
         public static int squareRoundUp(Int64 i)
@@ -120,28 +132,44 @@ namespace Primes
             Console.Write(i);
             if (i < 10)
             {
-                Console.Write("       ");
+                Console.Write("               ");
             }
             else if (i < 100)
             {
-                Console.Write("      ");
+                Console.Write("              ");
             }
             else if (i < 1000)
             {
-                Console.Write("     ");
+                Console.Write("             ");
             }
             else if (i < 10000)
             {
-                Console.Write("    ");
+                Console.Write("            ");
             }
             else if (i < 100000)
             {
-                Console.Write("   ");
+                Console.Write("           ");
             }
-            else
+            else if (i < 1000000)
             {
-                Console.Write("  ");
+                Console.Write("          ");
             }
+            else if (i < 10000000)
+            {
+                Console.Write("         ");
+            }
+        }
+
+        public static void saveNumbers(List<int> iList)
+        {
+            int counter = 0;
+            string[] s = new string[iList.Count];
+            foreach (int i in iList)
+            {
+                s[counter] = Convert.ToString(iList[counter]);
+                counter++;
+            }
+            System.IO.File.WriteAllLines(@".\output.txt", s);
         }
     }
 
@@ -152,21 +180,21 @@ namespace Primes
         public DateTime? EndAt { get; private set; }
 
 
-        public void Start()
+        public new void Start()
         {
             StartAt = DateTime.Now;
 
             base.Start();
         }
 
-        public void Stop()
+        public new void Stop()
         {
             EndAt = DateTime.Now;
 
             base.Stop();
         }
 
-        public void Reset()
+        public new void Reset()
         {
             StartAt = null;
             EndAt = null;
@@ -174,7 +202,7 @@ namespace Primes
             base.Reset();
         }
 
-        public void Restart()
+        public new void Restart()
         {
             StartAt = DateTime.Now;
             EndAt = null;
