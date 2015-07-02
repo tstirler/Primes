@@ -17,10 +17,9 @@ namespace Primes
             bool isItPrime = false;
 
             List<int> myPrimes = new List<int>();
-            myPrimes.Add(2);
+            //myPrimes.Add(3);
 
             CustomStopwatch sw = new CustomStopwatch();
-
 
             try
             {
@@ -32,15 +31,10 @@ namespace Primes
 
             sw.Start();
             Console.WriteLine("Primes from 2 to " + topNumber + ":");
-<<<<<<< HEAD
             myPrimes.Add(2);
-                        
-=======
-            
->>>>>>> origin/master
-            for (int primeCheck = 3; primeCheck < topNumber + 1; primeCheck++)
+            for (int primeCheck = 5; primeCheck < topNumber + 1; primeCheck++)
             {
-                if (primeCheck % 2 != 0) //discard even numbers.
+                if (primeCheck % 2 != 0 || primeCheck % 3 != 0) //discard even numbers and numbers divisible by the "first prime"
                 {
                     isItPrime = checkThroughList(primeCheck, myPrimes);
                     if (isItPrime)
@@ -51,26 +45,21 @@ namespace Primes
                 }
             }
 
-            sw.Stop();
+
 
             Console.WriteLine("");
             Console.WriteLine("");
-<<<<<<< HEAD
+
             if (sw.ElapsedMilliseconds > 5000)
             {
-                Console.WriteLine("There are " + numberOfPrimes + " primes from 2 to " + topNumber + ". It took " + sw.Elapsed + "s to calculate.");
+                Console.WriteLine("There are " + myPrimes.Count + " primes from 2 to " + topNumber + ". It took " + sw.Elapsed + "s to calculate.");
             }
             else
             {
-                Console.WriteLine("There are " + numberOfPrimes + " primes from 2 to " + topNumber + ". It took " + sw.ElapsedMilliseconds + "ms to calculate.");
+                Console.WriteLine("There are " + myPrimes.Count + " primes from 2 to " + topNumber + ". It took " + sw.ElapsedMilliseconds + "ms to calculate.");
             }
             Console.WriteLine("");
-            
-=======
-            Console.WriteLine("There are " + myPrimes.Count + " primes from 2 to " + topNumber + ". It took " + sw.ElapsedMilliseconds + "ms to calculate.");
-            Console.WriteLine("");
 
->>>>>>> origin/master
             if (topNumber == myPrimes[myPrimes.Count - 1])
             {
                 Console.WriteLine(topNumber + " is a prime number");
